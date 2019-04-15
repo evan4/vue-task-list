@@ -1,25 +1,21 @@
 <template>
   <div id="app">
-    <div id="nav">
-      <router-link to="/">Home</router-link> |
-      <router-link to="/about">About</router-link>
+    <div class="d-flex flex-column flex-md-row align-items-center p-3 px-md-4 mb-3 bg-white border-bottom box-shadow">
+      <h5 class="my-0 mr-md-auto font-weight-normal">Tasks List</h5>
+      <nav class="my-2 my-md-0 mr-md-3">
+        <router-link 
+        class="p-2 text-dark"
+        to="/">Tasks list</router-link>
+        <router-link 
+        class="p-2 text-dark"
+        to="/task-new">New task</router-link>
+      </nav>
     </div>
     <router-view />
   </div>
 </template>
-<style lang="stylus">
-#app
-  font-family 'Avenir', Helvetica, Arial, sans-serif
-  -webkit-font-smoothing antialiased
-  -moz-osx-font-smoothing grayscale
-  text-align center
-  color #2c3e50
 
-#nav
-  padding 30px
-  a
-    font-weight bold
-    color #2c3e50
-    &.router-link-exact-active
-      color #42b983
+<style lang="stylus">
+
+    
 </style>
