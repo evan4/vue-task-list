@@ -4,6 +4,7 @@ import Router from "vue-router";
 import List from "./components/List.vue";
 import TaskNew from "./components/TaskNew.vue";
 import Task from "./components/Task.vue";
+import NotFound from "./components/404";
 
 Vue.use(Router);
 
@@ -24,6 +25,7 @@ export default new Router({
       path: "/task/:id",
       name: "task",
       component: Task
-    }
+    },
+    { path: '*', component:NotFound },
   ]
 });

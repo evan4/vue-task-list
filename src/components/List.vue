@@ -2,16 +2,15 @@
     <div class="container">
         <div class="px-3 py-3 pt-md-5 pb-md-4 mx-auto">
             <h1 class="mb-2 mr-md-auto font-weight-normal text-center">Lists of tasks</h1>
-         
+            <div class="btn-group">
+                <button type="button" v-for="(state, index) in states" 
+                    :key="index"
+                    @click="changeSelectVal(state)" 
+                    :class="['btn', { 'btn-primary': selected === state, 'btn-default': selected !== state }]">{{ state }}</button>
+            </div>
             <div v-if="tasks.length"
                 class="table-responsive">
-                <form>
-                    <div class="form-group">
-                        <input type="text" class="form-control" 
-                            v-model="search"
-                            placeholder="Enter email">
-                    </div>
-                </form>
+                
                 <table class="table">
                     <thead>
                         <th scope="col">Name</th>
@@ -30,7 +29,7 @@
                             </td>
                             <td>{{task.date}}</td>
                             <td :class=" task.status === 'active' ? 'text-primary' : 'text-muted'">
-                                {{ activity(task.status) }}
+                                {{ activity(task.status, task.date) }}
                             </td>
                             <td>
                                 <a :href="`/task/${task.id}`">Edit</a>
@@ -44,22 +43,33 @@
 </template>
 
 <script>
-import { mapGetters } from 'vuex';
+import Form from '../helpers/form.js';
 
 export default {
     data(){
         return {
-           search: '',
-
+            states: ['All tasks', 'active', 'inactive', 'expired'],
+            selected: 'All tasks',
+            initialTasks: null
         }
     },
     computed: {
-        ...mapGetters(['tasks']),
-       
+        tasks() {
+            if(this.selected !== 'All tasks'){
+                let arr = this.initialTasks.filter(item => item.status === this.selected);
+                return arr;
+            }
+            return this.initialTasks
+        }
     },
     methods: {
-         activity(val){
+        changeSelectVal(val) {
+            this.selected = val;
+        },
+         activity(val, date){
             let str = '';
+            val = Form.checkDate(date) ? val : 'expired';
+
             switch (val) {
                 case 'active':
                     str = 'В работе';
@@ -76,6 +86,9 @@ export default {
             }
             return str;
         }
+    },
+    created() {
+        this.initialTasks = this.$store.getters.tasks;
     },
 }
 </script>

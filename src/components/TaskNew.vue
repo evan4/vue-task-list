@@ -43,6 +43,7 @@
 
 <script>
 import { mapGetters } from 'vuex';
+import Form from '../helpers/form.js';
 
 export default {
      data(){
@@ -59,30 +60,11 @@ export default {
         }
     },
     methods: {
-
-        checkDate(val){
-             let today = new Date(),
-                myDate = new Date(val);
-
-            return (myDate.getTime() >= today.getTime()) ? true : false;
-        },
         createTask(){
 
             this.errors = [];
 
-            if (!this.formData.name) {
-                this.errors.push('Task name required.');
-            }
-            if (!this.formData.desc) {
-                this.errors.push('Task body required.');
-            }else if(this.formData.desc.length > 2048){
-                 this.errors.push('Max length must be less than 2048 characters');
-            }
-            if (!this.formData.date) {
-                this.errors.push('Execution date required.');
-            }else if(!this.checkDate(this.formData.date)){
-                this.errors.push('Execution date must be later than today.');
-            }
+            this.errors = Form.checkForm(this.formData);
 
             if(!this.errors.length){
                 this.$store.dispatch('newTask', this.formData);
@@ -98,7 +80,6 @@ export default {
                 date: ''
             };
         },
-        
     },
     created(){
         const tasks = this.$store.getters.tasks;

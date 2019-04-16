@@ -21,10 +21,19 @@ export default new Vuex.Store({
     newTask(state, payload){
       state.tasks.push(payload);
     },
+    UpdateTask(state, payload){
+
+      const id = state.tasks.findIndex(todo => todo.id === payload.id);
+
+      state.tasks[id] = payload;
+    },
   },
   actions: {
     newTask({commit}, payload){
       commit('newTask', payload);
     },
+    UpdateTask({commit}, payload){
+      commit('UpdateTask', payload);
+    }
   }
 })

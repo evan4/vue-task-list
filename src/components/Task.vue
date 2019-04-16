@@ -35,8 +35,10 @@
                     id="date">
             </div>
             <div class="form-group">
-                <label for="date">Activity of task</label>
-                <select name="status" id="" class="form-control" >
+                <label for="status">Activity of task</label>
+                <select name="status" id="status" 
+                    v-model="formData.status"
+                    class="form-control" >
                     <option value="active">В работе</option>
                     <option value="inactive">Завершено</option>
                 </select>
@@ -50,6 +52,8 @@
 
 <script>
 import { mapGetters } from "vuex";
+import router from '../router';
+import Form from '../helpers/form.js';
 
 export default {
   data() {
@@ -71,6 +75,32 @@ export default {
 
     this.formData = tasks.find(todo => todo.id === id);
   },
+   methods: {
+        createTask(){
+
+            this.errors = [];
+
+            this.errors = Form.checkForm(this.formData);
+
+            if(!this.errors.length){
+                this.$store.dispatch('UpdateTask', this.formData);
+                this.clearForm();
+                router.push('/')
+            }
+        },
+        clearForm(){
+            this.errors = [];
+            this.formData = {
+                name: '',
+                desc: '',
+                tags: '',
+                date: ''
+            };
+        },
+    },
+  destroyed(){
+    this.clearForm();
+},
 };
 </script>
 
