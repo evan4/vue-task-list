@@ -79,7 +79,9 @@ export default {
       this.errors = Form.checkForm(this.formData);
 
       if (!this.errors.length) {
-        this.$store.dispatch("newTask", this.formData);
+        let tasks = JSON.parse(localStorage.getItem("tasks"));
+        tasks.push(this.formData);
+        localStorage.setItem("tasks", JSON.stringify(tasks));
         let id = this.formData.id + 1;
         this.clearForm();
         this.formData.id = id;
@@ -97,7 +99,8 @@ export default {
     }
   },
   created() {
-    this.formData.id = this.$store.getters.getNextId;
+    let tasks = JSON.parse(localStorage.getItem("tasks"));
+    this.formData.id = Math.max(...tasks.map(o => o.id), 0) + 1;
   },
   destroyed() {
     this.clearForm();

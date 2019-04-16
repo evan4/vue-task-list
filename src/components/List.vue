@@ -59,6 +59,7 @@
 
 <script>
 import Form from "../helpers/form.js";
+import data from "../tasks.json";
 
 export default {
   data() {
@@ -111,7 +112,10 @@ export default {
     }
   },
   created() {
-    this.initialTasks = this.$store.getters.tasks;
+    if (localStorage.getItem("tasks") === null) {
+      localStorage.setItem("tasks", JSON.stringify(data));
+    }
+    this.initialTasks = JSON.parse(localStorage.getItem("tasks"));
   }
 };
 </script>

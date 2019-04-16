@@ -87,7 +87,7 @@ export default {
   },
   created() {
     const id = Number(this.$route.params.id),
-      tasks = this.$store.getters.tasks;
+      tasks = JSON.parse(localStorage.getItem("tasks"));
 
     this.formData = tasks.find(todo => todo.id === id);
   },
@@ -98,7 +98,10 @@ export default {
       this.errors = Form.checkForm(this.formData);
 
       if (!this.errors.length) {
-        this.$store.dispatch("UpdateTask", this.formData);
+        let tasks = JSON.parse(localStorage.getItem("tasks"));
+        const itemId = tasks.findIndex(todo => todo.id === this.formData.id);
+        tasks[itemId] = this.formData;
+        localStorage.setItem("tasks", JSON.stringify(tasks));
         this.clearForm();
         router.push("/");
       }
