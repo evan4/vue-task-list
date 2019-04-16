@@ -97,9 +97,7 @@ export default {
     }
   },
   created() {
-    const tasks = this.$store.getters.tasks;
-    const id = Math.max(...tasks.map(o => o.id), 0) + 1;
-    this.formData.id = id;
+    this.formData.id = this.$store.getters.getNextId;
   },
   destroyed() {
     this.clearForm();

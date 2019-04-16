@@ -15,7 +15,8 @@ export default new Vuex.Store({
         state.tasks = data;
       }
       return state.tasks;
-    }
+    },
+    getNextId: state => Math.max(...state.tasks.map(o => o.id), 0) + 1
   },
   mutations: {
     newTask(state, payload) {
