@@ -1,15 +1,11 @@
 <template>
-    <div class="container">
-        <p>Sorry, the page could not found</p>
-    </div>
+  <div class="container">
+    <p>Sorry, the page could not found</p>
+  </div>
 </template>
 
 <script>
-export default {
-
-}
+export default {};
 </script>
 
-<style>
-
-</style>
+<style></style>

@@ -9,7 +9,7 @@ import NotFound from "./components/404";
 Vue.use(Router);
 
 export default new Router({
-  mode: 'history',
+  mode: "history",
   routes: [
     {
       path: "/",
@@ -26,6 +26,6 @@ export default new Router({
       name: "task",
       component: Task
     },
-    { path: '*', component:NotFound },
+    { path: "*", component: NotFound }
   ]
 });
